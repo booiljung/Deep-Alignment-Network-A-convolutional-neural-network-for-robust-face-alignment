@@ -13,6 +13,8 @@ import uuid
 
 import tensorflow as tf
 
+
+
 tf.app.flags.DEFINE_string('input_dir', None, "input_dir")
 tf.app.flags.DEFINE_string('output_dir', None, "output_dir")
 tf.app.flags.DEFINE_boolean('istrain', False, "istrain")
@@ -22,6 +24,8 @@ tf.app.flags.DEFINE_string('mirror_file', None, 'mirror_file')
 
 FLAGS = tf.app.flags.FLAGS
 BATCH_SIZE = 128
+
+
 
 def getAffine(From, To):
     FromMean = np.mean(From, axis=0)
@@ -43,6 +47,7 @@ def getAffine(From, To):
     T = ToMean - np.dot(FromMean, R)
 
     return R, T
+
 
 
 def _load_data(imagepath, ptspath, is_train,mirror_array):
@@ -102,6 +107,8 @@ def _load_data(imagepath, ptspath, is_train,mirror_array):
 
     return img,pts.astype(np.float32)
 
+
+
 def _input_fn(img, pts, is_train,mirror_array):
     dataset_image = tf.data.Dataset.from_tensor_slices(img)
     dataset_pts = tf.data.Dataset.from_tensor_slices(pts)
@@ -115,6 +122,8 @@ def _input_fn(img, pts, is_train,mirror_array):
 
     return dataset
 
+
+
 def _get_filenames(data_dir, listext):
     imagelist = []
     for ext in listext:
@@ -126,6 +135,8 @@ def _get_filenames(data_dir, listext):
         ptslist.append(os.path.splitext(image)[0] + ".pts")
 
     return imagelist, ptslist
+
+
 
 def main(argv):
     imagenames, ptsnames = _get_filenames(FLAGS.input_dir, ["*.jpg", "*.png"])

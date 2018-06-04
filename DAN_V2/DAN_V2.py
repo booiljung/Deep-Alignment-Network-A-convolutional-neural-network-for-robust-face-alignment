@@ -28,6 +28,8 @@ class VGG16Model(dan_model.Model):
             data_format=data_format
         )
 
+
+
 def get_filenames(data_dir):
     listext = ['*.png','*.jpg']
 
@@ -43,8 +45,11 @@ def get_filenames(data_dir):
     return imagelist, ptslist
 
 
+
 def get_synth_input_fn():
     return dan_run_loop.get_synth_input_fn(112, 112, 1, 68)
+
+
 
 def vgg16_input_fn(is_training,data_dir,batch_size=64,num_epochs=1,num_parallel_calls=1, multi_gpu=False):
     img_path,pts_path = get_filenames(data_dir)
@@ -66,11 +71,15 @@ def vgg16_input_fn(is_training,data_dir,batch_size=64,num_epochs=1,num_parallel_
                                                num_images,map_func,num_epochs,num_parallel_calls,
                                                examples_per_epoch=num_images, multi_gpu=multi_gpu)
 
+
+
 def read_dataset_info(data_dir):
     mean_shape = np.loadtxt(os.path.join(data_dir,'mean_shape.ptv'),dtype=np.float32,delimiter=',')
     imgs_mean = np.loadtxt(os.path.join(data_dir,'imgs_mean.ptv'),dtype=np.float32,delimiter=',')
     imgs_std = np.loadtxt(os.path.join(data_dir,'imgs_std.ptv'),dtype=np.float32,delimiter=',')
     return mean_shape.astype(np.float32) ,imgs_mean.astype(np.float32),imgs_std.astype(np.float32)
+
+
 
 def video_input_fn(data_dir,img_size,num_lmark):
     video = cv2.VideoCapture(data_dir)
